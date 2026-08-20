@@ -39,3 +39,8 @@ enableRobotsTXT = true
 
 [markup.goldmark.renderer]
 unsafe = true
+[server]
+  [[server.headers]]
+    for = "/**"
+    [server.headers.values]
+      Cache-Control = "no-cache"
