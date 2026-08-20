@@ -126,7 +126,20 @@ function initProductFullpage() {
     const animateDuration = 600;
 
     // 初始化第一屏
-    sections[0].classList.add('active');
+    // 初始化：根据 URL 参数直接定位到目标产品屏，避免先显示第一屏
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlProduct = urlParams.get('product');
+    if (urlProduct) {
+        const idx = parseInt(urlProduct, 10) - 1;
+        if (!isNaN(idx) && idx >= 0 && idx < total) {
+            currentIndex = idx;
+        }
+    }
+    sections[currentIndex].classList.add('active');
+    dots[currentIndex].classList.add('active');
+    if (progressBar) {
+        progressBar.style.width = ((currentIndex / (total - 1)) * 100) + '%';
+    }
 
     // 跳转区块，同步更新url参数
     function goToSection(index, pushUrl = true) {
@@ -164,7 +177,7 @@ function initProductFullpage() {
         const productIndex = params.get('product');
         if (productIndex) {
             const index = parseInt(productIndex, 10) - 1;
-            if (!isNaN(index) && index >= 0 && index < total) {
+            if (!isNaN(index) && index >= 0 && index < total && index !== currentIndex) {
                 setTimeout(() => goToSection(index, false), 300);
             }
         }
@@ -185,6 +198,14 @@ function initProductFullpage() {
     document.addEventListener('wheel', function(e) {
         if (!document.querySelector('.products-fullpage')) return;
         
+        // 已滚入页脚等区域：放行原生滚动，回到顶部前不再接管
+        if (window.scrollY > 0) return;
+
+        // 边界放行：首屏向上、末屏向下时允许浏览器原生滚动
+        const atFirst = (currentIndex === 0 && e.deltaY < 0);
+        const atLast = (currentIndex === total - 1 && e.deltaY > 0);
+        if (atFirst || atLast) return;
+
         e.preventDefault();
         if (isAnimating) return;
 
