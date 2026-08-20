@@ -15,10 +15,9 @@
   btnLink: "/products/?product=2"
 
 - id: 3
-  tag: "产品标签待定"
-  title: "本体"
-  subtitle: "描述待定，拿到文案后替换这里"
+  tag: "自研知识底座"
+  title: "本体（Ontology）"
+  subtitle: "用结构化根治大模型幻觉，为AI的每一次判断提供可靠、可审计、可追溯的依据"
   image: "/images/banner3.jpg"
   btnText: "了解更多"
-  btnLink: "#"
-
+  btnLink: "/products/?product=3"
