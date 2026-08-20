@@ -8,7 +8,7 @@
 
 - id: 2
   tag: "大数据与 AI 融合"
-  title: "HaiBao Data"
+  title: "NL2SQL"
   subtitle: "自然语言一键生成 SQL，高准确率智能分析，高效释放企业数据生产力"
   image: "/images/banner2.jpg"
   btnText: "了解更多"
@@ -22,18 +22,3 @@
   btnText: "了解更多"
   btnLink: "#"
 
-- id: 4
-  tag: "产品标签待定"
-  title: "ToB Agent"
-  subtitle: "描述待定，拿到文案后替换这里"
-  image: "/images/banner3.jpg"
-  btnText: "了解更多"
-  btnLink: "#"
-
-- id: 5
-  tag: "产品标签待定"
-  title: "插件集"
-  subtitle: "描述待定，拿到文案后替换这里"
-  image: "/images/banner3.jpg"
-  btnText: "了解更多"
-  btnLink: "#"

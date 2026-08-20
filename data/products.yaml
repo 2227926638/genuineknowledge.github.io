@@ -12,7 +12,7 @@
   btnLink: "https://www.genuineknowledge.cn/haitun/"
 
 - id: 2
-  name: "Haibao Data"
+  name: "NL2SQL"
   desc: "自然语言提问，自动生成SQL，在你的数据源上执行，返回表格、图表与洞见。准确率领先同类产品，越用越懂你的业务口径。"
   features:
     - "准确率领先同类产品"
@@ -20,3 +20,23 @@
     - "兼容主流数据库"
     - "一键导出图表报表"
   image: "/images/product2.png"
+- id: 3
+  name: "本体"
+  desc: "描述待定，拿到文案后替换这里"
+  features:
+    - "功能点待定"
+  image: "/images/product3.png"
+
+- id: 4
+  name: "ToB Agent"
+  desc: "描述待定，拿到文案后替换这里"
+  features:
+    - "功能点待定"
+  image: "/images/product4.png"
+
+- id: 5
+  name: "插件集"
+  desc: "描述待定，拿到文案后替换这里"
+  features:
+    - "功能点待定"
+  image: "/images/product5.png"
