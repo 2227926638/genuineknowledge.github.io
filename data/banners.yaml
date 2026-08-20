@@ -8,9 +8,16 @@
 
 - id: 2
   tag: "大数据与 AI 融合"
-  title: "HaiBao Data"
+  title: "NL2SQL"
   subtitle: "自然语言一键生成 SQL，高准确率智能分析，高效释放企业数据生产力"
   image: "/images/banner2.jpg"
   btnText: "了解更多"
   btnLink: "/products/?product=2"
 
+- id: 3
+  tag: "自研知识底座"
+  title: "本体（Ontology）"
+  subtitle: "用结构化根治大模型幻觉，为AI的每一次判断提供可靠、可审计、可追溯的依据"
+  image: "/images/banner3.jpg"
+  btnText: "了解更多"
+  btnLink: "/products/?product=3"

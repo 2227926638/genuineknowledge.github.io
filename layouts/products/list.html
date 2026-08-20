@@ -22,7 +22,7 @@
                     </li>
                     {{ end }}
                 </ul>
-                {{ if ne $index 1 }}
+                {{ if .btnLink }}
                 <div class="product-buttons">
                     <a href="{{ .btnLink }}" class="btn btn-primary product-detail-btn">{{ .btnText }}</a>
                 </div>
