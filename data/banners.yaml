@@ -14,3 +14,26 @@
   btnText: "了解更多"
   btnLink: "/products/?product=2"
 
+- id: 3
+  tag: "产品标签待定"
+  title: "本体"
+  subtitle: "描述待定，拿到文案后替换这里"
+  image: "/images/banner3.jpg"
+  btnText: "了解更多"
+  btnLink: "#"
+
+- id: 4
+  tag: "产品标签待定"
+  title: "ToB Agent"
+  subtitle: "描述待定，拿到文案后替换这里"
+  image: "/images/banner3.jpg"
+  btnText: "了解更多"
+  btnLink: "#"
+
+- id: 5
+  tag: "产品标签待定"
+  title: "插件集"
+  subtitle: "描述待定，拿到文案后替换这里"
+  image: "/images/banner3.jpg"
+  btnText: "了解更多"
+  btnLink: "#"
