@@ -6,11 +6,11 @@
         <div class="banner-slide {{ if eq $index 0 }}active{{ end }}" style="background-image: url('{{ .image }}');">
             <div class="banner-overlay"></div>
             <div class="container banner-content">
-                <span class="banner-tag">{{ .tag }}</span>
-                <h1 class="banner-title">{{ .title }}</h1>
-                <p class="banner-subtitle">{{ .subtitle }}</p>
+                <span class="banner-tag" data-zh="{{ .tag }}" data-en="{{ .tag_en }}">{{ .tag }}</span>
+                <h1 class="banner-title" data-zh="{{ .title }}" data-en="{{ .title_en }}">{{ .title }}</h1>
+                <p class="banner-subtitle" data-zh="{{ .subtitle }}" data-en="{{ .subtitle_en }}">{{ .subtitle }}</p>
                 <div class="banner-buttons">
-                    <a href="{{ .btnLink }}" class="btn btn-primary">{{ .btnText }}</a>
+                    <a href="{{ .btnLink }}" class="btn btn-primary" data-zh="{{ .btnText }}" data-en="{{ .btnText_en }}">{{ .btnText }}</a>
                 </div>
             </div>
         </div>
@@ -41,8 +41,8 @@
     <div class="container">
         <div class="section-header">
             <span class="section-en">OUR CULTURE</span>
-            <h2 class="section-title">企业文化</h2>
-            <p class="section-desc">我们相信，优秀的企业文化是推动企业持续发展的核心动力</p>
+            <h2 class="section-title" data-zh="企业文化" data-en="Our Culture">企业文化</h2>
+            <p class="section-desc" data-zh="我们相信，优秀的企业文化是推动企业持续发展的核心动力" data-en="We believe a strong corporate culture is the driving force behind sustainable growth">我们相信，优秀的企业文化是推动企业持续发展的核心动力</p>
             <div class="section-divider"></div>
         </div>
         
@@ -55,8 +55,8 @@
                     </svg>
                 </div>
                 <span class="culture-en">GOAL</span>
-                <h3>目标</h3>
-                <p>打造靠谱的自进化大模型与Agent</p> 
+                <h3 data-zh="目标" data-en="Goal">目标</h3>
+                <p data-zh="打造靠谱的自进化大模型与Agent" data-en="Building reliable, self-evolving LLMs and Agents">打造靠谱的自进化大模型与Agent</p> 
             </div>
 
             <div class="culture-card">
@@ -67,8 +67,8 @@
                     </svg>
                 </div>
                 <span class="culture-en">VISION</span>
-                <h3>愿景</h3>
-                <p>符号连接融合实现ASI</p> 
+                <h3 data-zh="愿景" data-en="Vision">愿景</h3>
+                <p data-zh="符号连接融合实现ASI" data-en="Achieving ASI through the fusion of symbols and connections">符号连接融合实现ASI</p> 
             </div>
 
             <div class="culture-card">
@@ -78,8 +78,8 @@
                     </svg>
                 </div>
                 <span class="culture-en">MISSION</span>
-                <h3>使命</h3>
-                 <p>让AI按需赋能</p> 
+                <h3 data-zh="使命" data-en="Mission">使命</h3>
+                 <p data-zh="让AI按需赋能" data-en="Empowering AI on demand">让AI按需赋能</p> 
             </div>
         </div>
     </div>

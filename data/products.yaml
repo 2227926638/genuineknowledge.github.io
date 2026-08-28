@@ -1,49 +1,81 @@
 - id: 1
   name: "HaiTun agent"
+  name_en: "HaiTun Agent"
   desc: "依托原创可微符号知识方程技术构建智能体架构，自主完成工具调用、长程规划、记忆存储与安全管控，解决大模型幻觉、不稳定、难调试痛点，可自主迭代优化适配各行业复杂业务流程。"
+  desc_en: "Built on proprietary differentiable symbolic knowledge-equation technology, it autonomously handles tool calling, long-horizon planning, memory storage, and safety controls — addressing LLM hallucinations, instability, and debugging pain points while self-iterating to fit complex business workflows across industries."
   features:
     - "原生自进化能力，无需人工持续维护规则"
     - "长链路规划执行错误率大幅低于行业主流方案"
     - "百万级超长上下文精准记忆，信息检索无失真"
     - "内置 Fusion Guard 安全组件，规避越权、提示注入风险"
     - "适配代码、数据分析、办公、运维等多类工具场景"
+  features_en:
+    - "Native self-evolution without manual rule maintenance"
+    - "Long-chain planning & execution error rates far below mainstream solutions"
+    - "Accurate million-token long-context memory with lossless retrieval"
+    - "Built-in Fusion Guard security to prevent privilege escalation and prompt injection"
+    - "Works across coding, data analysis, office, and ops tool scenarios"
   image: "/images/product1.png"
   btnText: "了解更多"
+  btnText_en: "Learn More"
   btnLink: "https://www.genuineknowledge.cn/haitun/"
 
 - id: 2
   name: "NL2SQL"
+  name_en: "NL2SQL"
   desc: "自然语言提问，自动生成SQL，在你的数据源上执行，返回表格、图表与洞见。准确率领先同类产品，越用越懂你的业务口径。"
+  desc_en: "Ask in natural language, auto-generate SQL, execute against your data sources, and return tables, charts, and insights. Outperforms peers in accuracy and learns your business definitions over time."
   features:
     - "准确率领先同类产品"
     - "越用越懂业务口径"
     - "兼容主流数据库"
     - "一键导出图表报表"
+  features_en:
+    - "Accuracy ahead of comparable products"
+    - "Learns your business definitions over time"
+    - "Compatible with mainstream databases"
+    - "One-click charts and report export"
   image: "/images/product2.png"
 
 - id: 3
   name: "本体（Ontology）"
+  name_en: "Ontology"
   desc: "真知自研的结构化知识底座。让本体与大模型双驱动：知识用本体显式组织、可审计可追溯，大模型负责理解与生成。落地8项能力——本体增强、大模型生成、混合检索、提示词工程、执行器编排、上下文管理、智能体记忆、规划器。让AI的每次判断有据可依、可解释。"
+  desc_en: "Genuine Knowledge's self-developed structured knowledge foundation. Ontology and LLMs work in tandem: knowledge is explicitly organized, auditable, and traceable via ontology, while LLMs handle understanding and generation. It delivers 8 capabilities — ontology enhancement, LLM generation, hybrid retrieval, prompt engineering, executor orchestration, context management, agent memory, and planning — so every AI decision is grounded and explainable."
   features:
     - "显式知识图谱，决策有据可查，告别黑箱"
     - "本体与大模型双驱动，记忆不丢失、理解更准"
     - "可靠+可解释，适合对准确性要求高的2B/2G场景"
     - "可独立部署，亦可作为插件嵌入Agent"
+  features_en:
+    - "Explicit knowledge graphs, traceable decisions — no more black box"
+    - "Ontology + LLM dual drive: no memory loss, better understanding"
+    - "Reliable and explainable, ideal for accuracy-critical B2B/B2G scenarios"
+    - "Deployable standalone or embeddable into Agents as a plugin"
   image: "/images/product3.png"
 
 - id: 4
   name: "企业级 HaiTun Agent"
+  name_en: "Enterprise HaiTun Agent"
   desc: "面向企业的通用智能体平台。基于本体知识底座构建，让Agent在真实业务里靠谱落地：理解复杂指令、调用企业系统、自主完成任务，且过程可追溯、输出可审计。适合对安全与可控要求高的企业场景。"
+  desc_en: "An enterprise-grade general-purpose agent platform built on the ontology knowledge foundation. It makes Agents reliable in real business: understanding complex instructions, calling enterprise systems, and completing tasks autonomously — with traceable processes and auditable outputs. Built for enterprises with high security and control requirements."
   features:
     - "通用智能体平台，适配全行业复杂业务流程"
     - "本体加持，每一步决策有据可查"
     - "自主完成任务，结果可靠、可审计"
     - "企业级部署，数据与权限可控"
+  features_en:
+    - "General-purpose agent platform for complex workflows across industries"
+    - "Ontology-powered: every decision is traceable"
+    - "Autonomous task completion, reliable and auditable results"
+    - "Enterprise-grade deployment with controlled data and permissions"
   image: "/images/product4.png"
 
 - id: 5
   name: "本体增强的插件集"
+  name_en: "Ontology-Enhanced Plugin Suite"
   desc: "把本体应用的8项能力插件化，可单独销售、按需组合，嵌入任何Agent即可增强其记忆与执行能力。核心起点是记忆与Method（执行器与编排器）。"
+  desc_en: "Packages the 8 ontology capabilities as plugins for standalone sale and on-demand composition. Embed them into any Agent to enhance its memory and execution. The core starts with memory and Method (executors and orchestrators)."
   features:
     - "本体增强的记忆——长效记忆不漂移"
     - "本体增强的method ——执行器与编排器"
@@ -51,4 +83,11 @@
     - "提示词工程 / 上下文管理——回答更稳"
     - "执行器编排 / 规划器——任务更可靠"
     - "配合大模型生成，开箱即用"
+  features_en:
+    - "Ontology-enhanced memory — long-lasting, drift-free"
+    - "Ontology-enhanced Method — executors and orchestrators"
+    - "Retrieval-augmented / hybrid retrieval — more accurate recall"
+    - "Prompt engineering / context management — steadier answers"
+    - "Executor orchestration / planner — more reliable tasks"
+    - "Works with LLM generation, out of the box"
   image: "/images/product5.png"

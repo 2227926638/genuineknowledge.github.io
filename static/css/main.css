@@ -1611,3 +1611,26 @@ body {
         font-size: 13px;
     }
 }
+/* 语言切换按钮 */
+.lang-toggle {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  width: auto;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  line-height: 1;
+}
+.lang-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
