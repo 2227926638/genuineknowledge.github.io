@@ -10,21 +10,21 @@
         <div class="container product-container {{ if not (modBool $index 2) }}reverse{{ end }}">
             <div class="product-text">
                 <span class="product-index">{{ .index }}</span>
-                <h2 class="product-name">{{ .name }}</h2>
-                <p class="product-desc">{{ .desc }}</p>
+                <h2 class="product-name" data-zh="{{ .name }}" data-en="{{ .name_en }}">{{ .name }}</h2>
+                <p class="product-desc" data-zh="{{ .desc }}" data-en="{{ .desc_en }}">{{ .desc }}</p>
                 <ul class="product-features">
-                    {{ range .features }}
+                    {{ range $i, $f := .features }}
                     <li>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
-                        {{ . }}
+                        <span data-zh="{{ $f }}" data-en="{{ index $product.features_en $i }}">{{ $f }}</span>
                     </li>
                     {{ end }}
                 </ul>
                 {{ if .btnLink }}
                 <div class="product-buttons">
-                    <a href="{{ .btnLink }}" class="btn btn-primary product-detail-btn">{{ .btnText }}</a>
+                    <a href="{{ .btnLink }}" class="btn btn-primary product-detail-btn" data-zh="{{ .btnText }}" data-en="{{ .btnText_en }}">{{ .btnText }}</a>
                 </div>
                 {{ end }}
             </div>

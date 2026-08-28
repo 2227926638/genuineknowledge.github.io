@@ -6,8 +6,8 @@
                 <img src="{{ .Site.Params.logoFull }}" alt="{{ .Site.Params.brandName }}" class="logo-full">
             </a>
             <div class="header-slogan-text">
-                <span>符号连接融合</span>
-                <span>大模型与智能体</span>
+                <span data-zh="符号连接融合" data-en="Connecting Symbols & Intelligence">符号连接融合</span>
+                <span data-zh="大模型与智能体" data-en="LLMs & Agents">大模型与智能体</span>
             </div>
         </div>
 
@@ -15,20 +15,25 @@
         <nav class="main-nav">
             <ul class="nav-list">
                 <li class="nav-item dropdown">
-                    <a href="/products/?product" class="nav-product-btn">我们的产品</a>
+                    <a href="/products/?product" class="nav-product-btn" data-zh="我们的产品" data-en="Products">我们的产品</a>
                     <div class="dropdown-menu">
                         <a href="/products/?product=1" class="dropdown-item">HaiTun Agent</a>
                         <a href="/products/?product=2" class="dropdown-item">NL2SQL</a>
-                        <a href="/products/?product=3" class="dropdown-item">本体（Ontology）</a>
-                        <a href="/products/?product=4" class="dropdown-item">企业级 HaiTun Agent</a>
-                        <a href="/products/?product=5" class="dropdown-item">本体增强的插件集</a>
+                        <a href="/products/?product=3" class="dropdown-item" data-zh="本体（Ontology）" data-en="Ontology">本体（Ontology）</a>
+                        <a href="/products/?product=4" class="dropdown-item" data-zh="企业级 HaiTun Agent" data-en="Enterprise HaiTun Agent">企业级 HaiTun Agent</a>
+                        <a href="/products/?product=5" class="dropdown-item" data-zh="本体增强的插件集" data-en="Ontology-Enhanced Plugin Suite">本体增强的插件集</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="/about/" class="nav-link">关于我们</a>
+                    <a href="/about/" class="nav-link" data-zh="关于我们" data-en="About Us">关于我们</a>
                 </li>
                 <li class="nav-item">
-                    <a href="https://www.genuineknowledge.cn/joinus/" class="nav-link">加入我们</a>
+                    <a href="https://www.genuineknowledge.cn/joinus/" class="nav-link" data-zh="加入我们" data-en="Join Us">加入我们</a>
+                </li>
+                <li class="nav-item">
+                    <button class="lang-toggle" aria-label="切换语言">
+                        <span>中</span> / <span>En</span>
+                    </button>
                 </li>
             </ul>
         </nav>
@@ -43,20 +48,25 @@
     <div class="mobile-menu" id="mobileMenu">
         <ul class="mobile-nav-list">
             <li>
-                <a href="/products/?product" class="mobile-nav-link">我们的产品</a>
+                <a href="/products/?product" class="mobile-nav-link" data-zh="我们的产品" data-en="Products">我们的产品</a>
                 <div class="mobile-submenu">
                     <a href="/products/?product=1" class="mobile-submenu-item">HaiTun Agent</a>
                     <a href="/products/?product=2" class="mobile-submenu-item">NL2SQL</a>                        
-                    <a href="/products/?product=3" class="mobile-submenu-item">本体（Ontology）</a>
-                    <a href="/products/?product=4" class="mobile-submenu-item">企业级 HaiTun Agent</a>
-                    <a href="/products/?product=5" class="mobile-submenu-item">本体增强的插件集</a>
+                    <a href="/products/?product=3" class="mobile-submenu-item" data-zh="本体（Ontology）" data-en="Ontology">本体（Ontology）</a>
+                    <a href="/products/?product=4" class="mobile-submenu-item" data-zh="企业级 HaiTun Agent" data-en="Enterprise HaiTun Agent">企业级 HaiTun Agent</a>
+                    <a href="/products/?product=5" class="mobile-submenu-item" data-zh="本体增强的插件集" data-en="Ontology-Enhanced Plugin Suite">本体增强的插件集</a>
                 </div>
             </li>
             <li>
-                <a href="/about/" class="mobile-nav-link">关于我们</a>
+                <a href="/about/" class="mobile-nav-link" data-zh="关于我们" data-en="About Us">关于我们</a>
             </li>
             <li>
-                <a href="https://www.genuineknowledge.cn/joinus/" class="mobile-nav-link">加入我们</a>
+                <a href="https://www.genuineknowledge.cn/joinus/" class="mobile-nav-link" data-zh="加入我们" data-en="Join Us">加入我们</a>
+            </li>
+            <li>
+                <button class="lang-toggle" aria-label="切换语言">
+                    <span>中</span> / <span>En</span>
+                </button>
             </li>
         </ul>
     </div>

@@ -3,22 +3,22 @@
         <div class="footer-brand">
             <img src="{{ .Site.Params.logoFull }}" alt="{{ .Site.Params.brandName }}" class="footer-logo">
             <div class="footer-slogan">
-                <span>符号连接融合</span>
-                <span>大模型与智能体</span>
+                <span data-zh="符号连接融合" data-en="Connecting Symbols & Intelligence">符号连接融合</span>
+                <span data-zh="大模型与智能体" data-en="LLMs & Agents">大模型与智能体</span>
             </div>
         </div>
 
         <div class="footer-links">
-            <h4>导航</h4>
-            <a href="/products/">我们的产品</a>
-            <a href="/about/">关于我们</a>
-            <a href="https://www.genuineknowledge.cn/joinus/">加入我们</a>
+            <h4 data-zh="导航" data-en="Navigation">导航</h4>
+            <a href="/products/" data-zh="我们的产品" data-en="Products">我们的产品</a>
+            <a href="/about/" data-zh="关于我们" data-en="About Us">关于我们</a>
+            <a href="https://www.genuineknowledge.cn/joinus/" data-zh="加入我们" data-en="Join Us">加入我们</a>
         </div>
     </div>
 
     <div class="footer-bottom">
         <div class="container">
-            <p>&copy; {{ now.Format "2006" }} {{ .Site.Params.companyName }}. All rights reserved.</p>
+            <p>&copy; {{ now.Format "2006" }} <span data-zh="{{ .Site.Params.companyName }}" data-en="Genuine Knowledge">{{ .Site.Params.companyName }}</span>. All rights reserved.</p>
         </div>
     </div>
 </footer>

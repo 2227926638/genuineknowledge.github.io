@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Title }} - {{ .Site.Params.companyName }}</title>
+    <title data-zh="{{ .Title }} - {{ .Site.Params.companyName }}" data-en="{{ .Title }} - Genuine Knowledge">{{ .Title }} - {{ .Site.Params.companyName }}</title>
     <meta name="description" content="{{ .Site.Params.siteDesc }}">
     <link rel="icon" type="image/png" href="{{ .Site.Params.logoIcon }}">
     <link rel="stylesheet" href="/css/main.css">
@@ -18,5 +18,36 @@
     {{ partial "footer.html" . }}
 
     <script src="/js/main.js"></script>
+    <script>
+    // ========== 中英文切换 ==========
+    const savedLang = localStorage.getItem('gk-site-lang');
+    const manualLang = localStorage.getItem('gk-site-lang-manual');
+
+    function switchLang(lang) {
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-zh]').forEach(el => {
+        el.textContent = lang === 'zh' ? el.dataset.zh : el.dataset.en;
+      });
+      localStorage.setItem('gk-site-lang', lang);
+    }
+
+    // 初始化语言：优先用户手动选择；首次访问按浏览器语言自动判断
+    let initialLang;
+    if (savedLang && manualLang) {
+      initialLang = savedLang;
+    } else {
+      const navLang = (navigator.language || navigator.languages?.[0] || 'zh').toLowerCase();
+      initialLang = navLang.startsWith('zh') ? 'zh' : 'en';
+    }
+    switchLang(initialLang);
+
+    document.querySelectorAll('.lang-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const current = document.documentElement.lang.startsWith('zh') ? 'zh' : 'en';
+        localStorage.setItem('gk-site-lang-manual', '1');
+        switchLang(current === 'zh' ? 'en' : 'zh');
+      });
+    });
+    </script>
 </body>
 </html>
