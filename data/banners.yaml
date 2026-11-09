@@ -33,3 +33,15 @@
   btnText: "了解更多"
   btnText_en: "Learn More"
   btnLink: "/products/?product=3"
+
+- id: 5
+  tag: "本体增强能力"
+  tag_en: "Ontology-Enhanced Capabilities"
+  title: "本体增强的插件集"
+  title_en: "Ontology-Enhanced Plugin Suite"
+  subtitle: "即插即用， Agent 注入本体能力，贯通记忆、检索、上下文与执行编排，让每个 Agent 记得住、答得稳、做得可靠。"
+  subtitle_en: "Plug and play: inject ontology capabilities into any Agent, connecting memory, retrieval, context, and execution orchestration so every Agent remembers, answers consistently, and acts reliably."
+  image: "/images/banner3.jpg"
+  btnText: "了解更多"
+  btnText_en: "Learn More"
+  btnLink: "/products/?product=5"
