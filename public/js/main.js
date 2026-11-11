@@ -14,11 +14,8 @@ function initHeaderScroll() {
     const header = document.getElementById('siteHeader');
     if (!header) return;
 
-    // 判断是否在首页
-    const isHome = document.body.classList.contains('home') || window.location.pathname === '/' || window.location.pathname === '/genuineknowledge.github.io/';
-
     const updateHeader = () => {
-        if (!isHome || window.scrollY > 50) {
+        if (window.scrollY > 30) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
@@ -90,14 +87,13 @@ function initBannerCarousel() {
         });
     });
 
-    // 鼠标悬停暂停，移开恢复
     carousel.addEventListener('mouseenter', stopAutoPlay);
     carousel.addEventListener('mouseleave', startAutoPlay);
 
     startAutoPlay();
 }
 
-// 滚动渐入动画（企业文化、时间轴等）
+// 滚动渐入动画
 function initScrollAnimations() {
     const elements = document.querySelectorAll('.section-animate, .timeline-item');
     if (!elements.length) return;
@@ -117,68 +113,158 @@ function initScrollAnimations() {
     elements.forEach(el => observer.observe(el));
 }
 
-// 产品页全屏滚动 + 圆点导航 + 进度条 + 键盘切换
+// 产品页：滚轮整屏翻页（仅修改此函数，其余代码完全不变）
+
 function initProductFullpage() {
-    const fullpage = document.getElementById('productsFullpage');
-    const dots = document.querySelectorAll('#scrollIndicator .indicator-dot');
+    const sections = Array.from(
+        document.querySelectorAll('.product-section')
+    );
+    const dots = Array.from(
+        document.querySelectorAll('#scrollIndicator .indicator-dot')
+    );
     const progressBar = document.getElementById('progressBar');
-    if (!fullpage || !dots.length) return;
 
-    const sections = fullpage.querySelectorAll('.product-section');
+    if (!sections.length) return;
+
     const total = sections.length;
+    let currentIndex = 0;
+    let isAnimating = false;
+    const animateDuration = 600;
 
-    function updateScrollState() {
-        const scrollTop = fullpage.scrollTop;
-        const viewHeight = fullpage.clientHeight;
-        const currentIndex = Math.round(scrollTop / viewHeight);
+    // 根据真实产品 ID 查找页面位置
+    function getIndexByProductId(productId) {
+        return sections.findIndex(section =>
+            section.dataset.productId === String(productId)
+        );
+    }
 
-        // 更新右侧圆点
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentIndex);
+    // 根据网址参数查找对应产品
+    function getIndexFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('product');
+
+        if (!productId) return 0;
+
+        const index = getIndexByProductId(productId);
+        return index >= 0 ? index : 0;
+    }
+
+    // 更新产品页面、指示圆点和进度条
+    function updateDisplay() {
+        sections.forEach((section, index) => {
+            section.classList.toggle('active', index === currentIndex);
         });
 
-        // 更新顶部进度条
-        const maxScroll = fullpage.scrollHeight - viewHeight;
-        const progress = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+
         if (progressBar) {
-            progressBar.style.width = progress + '%';
+            progressBar.style.width = (
+                total > 1
+                    ? (currentIndex / (total - 1)) * 100
+                    : 100
+            ) + '%';
         }
     }
 
-    fullpage.addEventListener('scroll', updateScrollState);
-    updateScrollState();
+    // 初次进入页面时，根据 ?product=ID 定位
+    currentIndex = getIndexFromUrl();
+    updateDisplay();
 
-    // 圆点点击跳转
+    // 切换产品页面
+    function goToSection(index, pushUrl = true) {
+        if (isAnimating || index < 0 || index >= total) return;
+        if (index === currentIndex) return;
+
+        isAnimating = true;
+        currentIndex = index;
+        updateDisplay();
+
+        // 地址栏使用真实产品 ID，而不是数组下标
+        if (pushUrl) {
+            const productId = sections[currentIndex].dataset.productId;
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.set('product', productId);
+            history.pushState({}, '', newUrl);
+        }
+
+        setTimeout(() => {
+            isAnimating = false;
+        }, animateDuration);
+    }
+
+    // 浏览器前进、后退时同步产品页面
+    window.addEventListener('popstate', () => {
+        currentIndex = getIndexFromUrl();
+        updateDisplay();
+    });
+
+    // 鼠标滚轮切换
+    document.addEventListener('wheel', function(e) {
+        if (!document.querySelector('.products-fullpage')) return;
+
+        // 已滚入页脚等区域时允许正常滚动
+        if (window.scrollY > 0) return;
+
+        const atFirst = currentIndex === 0 && e.deltaY < 0;
+        const atLast = currentIndex === total - 1 && e.deltaY > 0;
+
+        if (atFirst || atLast) return;
+
+        e.preventDefault();
+
+        if (isAnimating) return;
+
+        if (e.deltaY > 0) {
+            goToSection(currentIndex + 1);
+        } else {
+            goToSection(currentIndex - 1);
+        }
+    }, { passive: false });
+
+    // 右侧圆点切换
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
-            const viewHeight = fullpage.clientHeight;
-            fullpage.scrollTo({
-                top: index * viewHeight,
-                behavior: 'smooth'
-            });
+            goToSection(index);
         });
     });
 
-    // 键盘上下键切换
+    // 键盘上下方向键切换
     document.addEventListener('keydown', (e) => {
-        const viewHeight = fullpage.clientHeight;
-        const current = Math.round(fullpage.scrollTop / viewHeight);
+        if (!document.querySelector('.products-fullpage')) return;
 
-        if (e.key === 'ArrowDown' && current < total - 1) {
+        if (e.key === 'ArrowDown') {
             e.preventDefault();
-            fullpage.scrollTo({
-                top: (current + 1) * viewHeight,
-                behavior: 'smooth'
-            });
-        }
-        if (e.key === 'ArrowUp' && current > 0) {
+            goToSection(currentIndex + 1);
+        } else if (e.key === 'ArrowUp') {
             e.preventDefault();
-            fullpage.scrollTo({
-                top: (current - 1) * viewHeight,
-                behavior: 'smooth'
-            });
+            goToSection(currentIndex - 1);
         }
     });
+
+    // 手机触屏上下滑动
+    let touchStartY = 0;
+
+    document.addEventListener('touchstart', (e) => {
+        if (!document.querySelector('.products-fullpage')) return;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+        if (!document.querySelector('.products-fullpage')) return;
+
+        const touchEndY = e.changedTouches[0].clientY;
+        const diff = touchStartY - touchEndY;
+
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                goToSection(currentIndex + 1);
+            } else {
+                goToSection(currentIndex - 1);
+            }
+        }
+    }, { passive: true });
 }
 
 // 新闻页实时搜索过滤
@@ -187,7 +273,7 @@ function initNewsSearch() {
     const newsList = document.getElementById('newsList');
     if (!searchInput || !newsList) return;
 
-    const cards = newsList.querySelectorAll('.news-card');
+    const cards = newsList.querySelectorAll('.news-card-link');
 
     searchInput.addEventListener('input', function() {
         const keyword = this.value.toLowerCase().trim();
@@ -218,7 +304,7 @@ function initJobExpand() {
     });
 }
 
-// 通用弹窗（产品详情 + 简历投递）
+// 通用弹窗
 function initModal() {
     const overlay = document.getElementById('modalOverlay');
     const closeBtn = document.getElementById('modalClose');
@@ -247,56 +333,6 @@ function initModal() {
         }
     });
 
-    // 产品「了解更多」弹窗
-    document.querySelectorAll('.product-detail-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const productName = btn.dataset.product;
-            openModal(`
-                <h3>${productName}</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.8;">
-                    该产品完整方案将在后续正式上线。如需了解功能细节、部署方式与商务报价，欢迎预约演示，我们的顾问将为您一对一讲解。
-                </p>
-                <div style="display: flex; gap: 12px;">
-                    <button class="btn btn-primary" onclick="alert('已提交预约请求'); document.getElementById('modalClose').click();">预约演示</button>
-                    <button class="btn btn-outline" onclick="document.getElementById('modalClose').click();">关闭</button>
-                </div>
-            `);
-        });
-    });
-
-    // 「投递简历」弹窗
-    document.querySelectorAll('.apply-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const jobName = btn.dataset.job;
-            openModal(`
-                <h3>投递简历 - ${jobName}</h3>
-                <form onsubmit="event.preventDefault(); alert('简历已提交，我们会尽快与您联系！'); document.getElementById('modalClose').click();">
-                    <div class="form-group">
-                        <label>姓名</label>
-                        <input type="text" required placeholder="请输入您的姓名">
-                    </div>
-                    <div class="form-group">
-                        <label>联系邮箱</label>
-                        <input type="email" required placeholder="请输入您的邮箱">
-                    </div>
-                    <div class="form-group">
-                        <label>个人简介</label>
-                        <textarea rows="3" placeholder="简单介绍一下自己"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>上传简历</label>
-                        <div class="file-upload" onclick="this.nextElementSibling.click()">
-                            点击上传 PDF / Word 简历
-                        </div>
-                        <input type="file" accept=".pdf,.doc,.docx" style="display:none;">
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%;">提交申请</button>
-                </form>
-            `);
-        });
-    });
-
-    // 暴露关闭方法供弹窗内联调用
     window.closeModal = closeModal;
 }
 
@@ -310,7 +346,6 @@ function initMobileMenu() {
         menu.classList.toggle('open');
     });
 
-    // 点击链接自动关闭
     menu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             menu.classList.remove('open');

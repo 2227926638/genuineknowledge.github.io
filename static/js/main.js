@@ -114,10 +114,16 @@ function initScrollAnimations() {
 }
 
 // 产品页：滚轮整屏翻页（仅修改此函数，其余代码完全不变）
+
 function initProductFullpage() {
-    const sections = document.querySelectorAll('.product-section');
-    const dots = document.querySelectorAll('#scrollIndicator .indicator-dot');
+    const sections = Array.from(
+        document.querySelectorAll('.product-section')
+    );
+    const dots = Array.from(
+        document.querySelectorAll('#scrollIndicator .indicator-dot')
+    );
     const progressBar = document.getElementById('progressBar');
+
     if (!sections.length) return;
 
     const total = sections.length;
@@ -125,44 +131,61 @@ function initProductFullpage() {
     let isAnimating = false;
     const animateDuration = 600;
 
-    // 初始化第一屏
-    // 初始化：根据 URL 参数直接定位到目标产品屏，避免先显示第一屏
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlProduct = urlParams.get('product');
-    if (urlProduct) {
-        const idx = parseInt(urlProduct, 10) - 1;
-        if (!isNaN(idx) && idx >= 0 && idx < total) {
-            currentIndex = idx;
-        }
-    }
-    sections[currentIndex].classList.add('active');
-    dots[currentIndex].classList.add('active');
-    if (progressBar) {
-        progressBar.style.width = ((currentIndex / (total - 1)) * 100) + '%';
+    // 根据真实产品 ID 查找页面位置
+    function getIndexByProductId(productId) {
+        return sections.findIndex(section =>
+            section.dataset.productId === String(productId)
+        );
     }
 
-    // 跳转区块，同步更新url参数
+    // 根据网址参数查找对应产品
+    function getIndexFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('product');
+
+        if (!productId) return 0;
+
+        const index = getIndexByProductId(productId);
+        return index >= 0 ? index : 0;
+    }
+
+    // 更新产品页面、指示圆点和进度条
+    function updateDisplay() {
+        sections.forEach((section, index) => {
+            section.classList.toggle('active', index === currentIndex);
+        });
+
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+
+        if (progressBar) {
+            progressBar.style.width = (
+                total > 1
+                    ? (currentIndex / (total - 1)) * 100
+                    : 100
+            ) + '%';
+        }
+    }
+
+    // 初次进入页面时，根据 ?product=ID 定位
+    currentIndex = getIndexFromUrl();
+    updateDisplay();
+
+    // 切换产品页面
     function goToSection(index, pushUrl = true) {
         if (isAnimating || index < 0 || index >= total) return;
+        if (index === currentIndex) return;
+
         isAnimating = true;
-
-        sections[currentIndex].classList.remove('active');
-        dots[currentIndex].classList.remove('active');
-
         currentIndex = index;
+        updateDisplay();
 
-        sections[currentIndex].classList.add('active');
-        dots[currentIndex].classList.add('active');
-
-        // 更新进度条
-        if (progressBar) {
-            progressBar.style.width = ((currentIndex / (total - 1)) * 100) + '%';
-        }
-
-        // 更新地址栏 ?product=数字
+        // 地址栏使用真实产品 ID，而不是数组下标
         if (pushUrl) {
-            const newUrl = new URL(window.location);
-            newUrl.searchParams.set('product', currentIndex + 1);
+            const productId = sections[currentIndex].dataset.productId;
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.set('product', productId);
             history.pushState({}, '', newUrl);
         }
 
@@ -171,80 +194,66 @@ function initProductFullpage() {
         }, animateDuration);
     }
 
-    // 页面加载时读取url参数，自动跳对应产品
-    window.addEventListener('load', () => {
-        const params = new URLSearchParams(window.location.search);
-        const productIndex = params.get('product');
-        if (productIndex) {
-            const index = parseInt(productIndex, 10) - 1;
-            if (!isNaN(index) && index >= 0 && index < total && index !== currentIndex) {
-                setTimeout(() => goToSection(index, false), 300);
-            }
-        }
-    });
-
-    // 浏览器前进后退监听
+    // 浏览器前进、后退时同步产品页面
     window.addEventListener('popstate', () => {
-        const params = new URLSearchParams(window.location.search);
-        const productIndex = params.get('product');
-        if (!productIndex) return;
-        const index = parseInt(productIndex, 10) - 1;
-        if (!isNaN(index) && index >= 0 && index < total) {
-            goToSection(index, false);
-        }
+        currentIndex = getIndexFromUrl();
+        updateDisplay();
     });
 
-    // 滚轮监听（带节流，一次滚动只翻一屏）
+    // 鼠标滚轮切换
     document.addEventListener('wheel', function(e) {
         if (!document.querySelector('.products-fullpage')) return;
-        
-        // 已滚入页脚等区域：放行原生滚动，回到顶部前不再接管
+
+        // 已滚入页脚等区域时允许正常滚动
         if (window.scrollY > 0) return;
 
-        // 边界放行：首屏向上、末屏向下时允许浏览器原生滚动
-        const atFirst = (currentIndex === 0 && e.deltaY < 0);
-        const atLast = (currentIndex === total - 1 && e.deltaY > 0);
+        const atFirst = currentIndex === 0 && e.deltaY < 0;
+        const atLast = currentIndex === total - 1 && e.deltaY > 0;
+
         if (atFirst || atLast) return;
 
         e.preventDefault();
+
         if (isAnimating) return;
 
         if (e.deltaY > 0) {
             goToSection(currentIndex + 1);
-        } else if (e.deltaY < 0) {
+        } else {
             goToSection(currentIndex - 1);
         }
     }, { passive: false });
 
-    // 右侧圆点点击
+    // 右侧圆点切换
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
             goToSection(index);
         });
     });
 
-    // 键盘上下键切换
+    // 键盘上下方向键切换
     document.addEventListener('keydown', (e) => {
         if (!document.querySelector('.products-fullpage')) return;
-        
+
         if (e.key === 'ArrowDown') {
             e.preventDefault();
             goToSection(currentIndex + 1);
-        }
-        if (e.key === 'ArrowUp') {
+        } else if (e.key === 'ArrowUp') {
             e.preventDefault();
             goToSection(currentIndex - 1);
         }
     });
 
-    // 触屏滑动支持
+    // 手机触屏上下滑动
     let touchStartY = 0;
+
     document.addEventListener('touchstart', (e) => {
+        if (!document.querySelector('.products-fullpage')) return;
         touchStartY = e.touches[0].clientY;
     }, { passive: true });
 
     document.addEventListener('touchend', (e) => {
         if (!document.querySelector('.products-fullpage')) return;
+
         const touchEndY = e.changedTouches[0].clientY;
         const diff = touchStartY - touchEndY;
 

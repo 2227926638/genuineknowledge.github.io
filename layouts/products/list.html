@@ -6,10 +6,10 @@
 
 <div class="products-fullpage" id="productsFullpage">
     {{ range $index, $product := .Site.Data.products }}
-    <section class="product-section" data-index="{{ $index }}">
+    <section class="product-section" data-index="{{ $index }}" data-product-id="{{ $product.id }}">
         <div class="container product-container {{ if not (modBool $index 2) }}reverse{{ end }}">
             <div class="product-text">
-                <span class="product-index">{{ .index }}</span>
+                <span class="product-index" data-zh="{{ .name }}" data-en="{{ .name_en }}">{{ .name }}</span>
                 <h2 class="product-name" data-zh="{{ .name }}" data-en="{{ .name_en }}">{{ .name }}</h2>
                 <p class="product-desc" data-zh="{{ .desc }}" data-en="{{ .desc_en }}">{{ .desc }}</p>
                 <ul class="product-features">
